@@ -1,0 +1,372 @@
+\documentclass[a4paper]{article}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+
+%%%%%%%%%%%%%%%%%%%%
+\newcommand{\hide}[1]{}
+
+\usepackage{natbib}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx}
+
+
+\hide{
+\usepackage{amscd}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{cases}		 
+\usepackage{cutwin}
+\usepackage{enumerate}
+\usepackage{epstopdf}
+\usepackage{graphicx}
+\usepackage{ifthen}
+\usepackage{lipsum}
+\usepackage{mathrsfs}	
+\usepackage{multimedia}
+\usepackage{wrapfig}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+
+}
+\bibliographystyle{humanbio}
+
+\usepackage{minted}
+\usepackage{xcolor}
+\usemintedstyle{manni} 
+\definecolor{LightGray}{rgb}{0.95,0.95,0.95}
+
+	 
+%\input{/usr/local/LATEX/Lee_newcommands.tex}
+\newcommand{\itemlist}[1]{\begin{itemize}#1\end{itemize}}
+\newcommand{\enumlist}[1]{\begin{enumerate}#1\end{enumerate}}
+\newcommand{\desclist}[1]{\begin{description}#1\end{description}}
+
+\newcommand{\Answer}[1]{\begin{quote}{\color{blue}#1}\end{quote}}
+\newcommand{\AND}{\wedge}
+\newcommand{\OR}{\vee}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\lra}{\leftrightarrow}
+
+\title {Projekt nr 1\\ Procesy stochastyczne w biologii i naukach społecznych\\}
+\author{{\bf Marcin Socha 418253, Antoni Misztal 417741} \\}
+
+\graphicspath{{images/}}
+
+
+
+
+\begin{document}
+\maketitle
+
+
+\section{Projekt}
+Rozważmy problem procesu stochastycznego $x(t)$ spełniającego równanie
+\begin{equation}
+    \frac{dx}{dt} = - \frac{1}{\tau} \left( x \ln(x) - ax \right) + \frac{\sqrt{2} \sigma}{\sqrt{\tau}} x \eta(t),
+\end{equation}
+gdzie $a$ jest stałą dodatnią, $\tau$ stałą czasu, $\sigma$ amplitudą białego szumu, zaś $\eta(t)$ procesem gaussowskim spełniającym
+\begin{equation}
+    <\eta(t)> = 0
+\end{equation}
+oraz 
+\begin{equation}
+    <\eta(t_1) \eta(t_2)> = \delta(t_1-t_2).
+\end{equation}
+
+
+\subsection{a)}
+Policzmy rozkład stacjonarny $x$.
+Zauważmy, że równanie $(1)$ jest równaniem Langevina dla funkcji
+\begin{equation}
+F(x) = -\frac{1}{\tau}( x \ln(x) - ax)    
+\end{equation}
+oraz 
+\begin{equation}
+    G(x) = \frac{\sqrt{2}\sigma}{\sqrt{\tau}}x.
+\end{equation}
+ W związku z tym możemy zastosować formułę Ito 
+ \begin{equation}
+     dH(x) = (H'(x)F(x) + \frac{1}{2}H''(x)G^2(x))dt + H'(x)G(x)dW + O(dt^{3/2})
+ \end{equation}
+ dla funkcji $y(x) = H(x) = \ln(x)$, gdzie $W$ to proces Wienera.
+Wówczas
+
+\begin{align} \label{Lan dla y}
+    \frac{dy}{dt} &= \frac{1}{x} \cdot \left(-\frac{1}{\tau}\right) ( x \ln(x) - ax)  - \frac{1}{2x^2} \cdot \frac{2 \sigma^2}{\tau}x^2 + \frac{1}{x} \cdot \frac{\sqrt{2}\sigma}{\sqrt{\tau}} x \eta(t) + O(dt^{1/2}) \nonumber \\
+    \frac{dy}{dt} & \approx -\frac{1}{\tau} \left( y - a + \sigma^2 \right) + \frac{\sqrt{2}\sigma}{\sqrt{\tau}} \eta(t).
+\end{align}
+
+Zauważmy, że powyższe równanie $(7)$ również jest równaniem Langevina. Wiemy z wykładu, że rozkład stacjonarny $y$ możemy zapisać równaniem
+\begin{align}
+    P(y) &= \frac{A \tau}{2\sigma^2} \cdot \exp\left(-2\int^y (z - a + \sigma^2 ) / (2\sigma^2) dz\right) \nonumber \\
+    & = \frac{A \tau}{2\sigma^2} \cdot \exp\left(-\frac{2\sigma^2 y - 2ay + y^2}{2\sigma^2} \right) \nonumber \\
+    & = \frac{A \tau}{2\sigma^2} \cdot \exp\left(\frac{-(y-(a-\sigma^2))^2 - (a-\sigma^2)^2}{2\sigma^2} \right) \nonumber \\
+    &= \exp\left( \frac{ (a-\sigma^2)^2}{2\sigma^2}\right) \frac{A \tau}{2\sigma^2} \cdot \exp\left(\frac{-(y-(a-\sigma^2))^2}{2\sigma^2} \right)
+\end{align}
+
+Zauważmy, że otrzymaliśmy coś podobnego do rozkładu normalnego. Policzmy teraz $A$, tak by całka po $dy$ na całej prostej wynosiła $1$ 
+\begin{align}
+    \frac{A \tau}{2 \sigma^2} \cdot \exp\left( \frac{ - (a-\sigma^2)^2}{2\sigma^2}\right) = \frac{1}{\sigma \sqrt{2 \pi}} \nonumber \\
+    \sigma (\sqrt{2} / \sqrt{\pi)} \exp \left( \frac{2\sigma^2}{(a-\sigma^2)^2}\right) = A.
+\end{align}
+
+Stąd otrzymujemy rozkład normalny z parametrami $\mu_s= a-\sigma^2$ oraz $\sigma_s = \sigma$.
+Podstawiając pod $y = \ln x$ dostajemy rozkład logarytmicznie normalny z tymi samymi parametrami, więc ostatecznie
+\begin{align}
+    P_{ss}(x) = \frac{1}{x \sigma \sqrt{2 \pi}} \exp\left(\frac{-(\ln(x)-(a-\sigma^2))^2}{2\sigma^2} \right)
+\end{align}
+Rozwiążmy teraz analitycznie równanie $(1)$ znajdując rozkład prawdopodobieństwa zmiennej losowej $x(t)$.
+
+Rozważmy jednak równanie $\eqref{Lan dla y}$ jako startowe. Zauważmy, że jest ono równoważne równaniu Fokkera- Plancka postaci
+\begin{align} \label{FP dla y}
+    \frac{\partial P(y,t)}{\partial t} = -\frac{\partial}{\partial y } \left[ -\frac{1}{\tau}(y-a+\sigma^2) P(y,t)\right] + \frac{1}{2} \frac{\partial^2}{\partial y^2} \left[ \frac{2\sigma^2}{\tau} P(y,t)\right].
+\end{align}
+Spróbujmy znaleźć rozwiązanie $\eqref{FP dla y}$ będące postaci
+\begin{equation}
+    P(y,t) = \frac{1}{\sigma \sqrt{2 \pi}} \exp \left( \frac{-(y - \mu(t) )^2}{2\sigma^2}\right).
+\end{equation}
+Podstawmy więc to równanie do $\eqref{FP dla y}$ aby móc wyliczyć $\mu(t)$.
+
+\begin{align}
+    &\frac{1}{\sqrt{2 \pi} \sigma^3} (y-\mu(t))\mu'(t) e^{-(y - \mu(t))^2 / (2\sigma^2)} =  \nonumber\\
+    & -\frac{1}{\sigma^3 \tau \sqrt{2 \pi}} \exp \left( \frac{-(y - \mu(t) )^2}{2\sigma^2}\right) \left ( a\mu(t) - ay - \sigma^2 \mu(t) - y \mu(t) - \sigma^2 + y^2 + \sigma^2y  \right) + \nonumber \\
+    & + \frac{1}{\tau \sigma^3 \sqrt{2 \pi}} \left( \exp \left( \frac{-(y - \mu(t) )^2}{2\sigma^2}\right) \left( -2y \mu(t) + \mu^2(t) - \sigma^2 + y^2 \right)\right).
+\end{align}
+Stąd łatwo widzimy dzieląc przez $\frac{1}{\sqrt{2 \pi} \sigma^3} e^{-(y - \mu(t))^2 / (2\sigma^2)}$, że
+
+\begin{align}
+    &(y-\mu(t))\mu'(t) =  \nonumber\\
+    & -\frac{1}{ \tau } \left ( a\mu(t) - ay - \sigma^2 \mu(t) - y \mu(t) - \sigma^2 + y^2 + \sigma^2y  \right) + \nonumber \\
+    & + \frac{1}{\tau } \left( -2y \mu(t) + \mu^2(t) - \sigma^2 + y^2 \right).
+\end{align}
+
+W takim razie
+
+\begin{align}
+    &(y-\mu(t))\mu'(t) =  \nonumber\\
+    & -\frac{1}{ \tau } \left ( a\mu(t) - ay - \sigma^2 \mu(t) + y \mu(t) + \sigma^2y - \mu^2(t) \right) \nonumber \\
+    & = -\frac{1}{\tau} (\sigma^2 - a + \mu)(y - \mu).
+\end{align}
+Stąd 
+\begin{align} \label{mu z C}
+    \mu'(t)  &= -\frac{1}{\tau} (\sigma^2 - a + \mu) \Rightarrow \mu  = C e^{-t/\tau} + a - \sigma^2.
+\end{align}
+
+Stąd rozkład zmiennej $y$ wynosi
+\begin{align}
+    P(y,t) = \frac{1}{\sigma \sqrt{2 \pi}} \exp \left( \frac{-(y - C e^{-t/\tau} - a + \sigma^2 )^2}{2\sigma^2}\right).
+\end{align}
+W takim razie skoro $y = \ln(x)$, to szukanym rozkładem jest
+\begin{align}
+     P(x,t) = \frac{1}{x \sigma \sqrt{2 \pi}} \exp \left( \frac{-(\ln x - C e^{-t/\tau} - a + \sigma^2 )^2}{2\sigma^2}\right),
+\end{align}
+ponieważ dla danego zbioru $A$ mamy
+\begin{align}
+    P(x \in A) = P(y \in \ln(A)) &= \int_{\ln(A)} \frac{1}{\sigma \sqrt{2 \pi}} \exp \left( \frac{-(y - C e^{-t/\tau} - a + \sigma^2 )^2}{2\sigma^2}\right) dy \nonumber\\
+    &= \int_{A} \frac{1}{x \sigma \sqrt{2 \pi}} \exp \left( \frac{-(\ln x - C e^{-t/\tau} - a + \sigma^2 )^2}{2\sigma^2}\right) dx.
+\end{align}
+ Z podpunktu $c)$ wiemy, że $x(0) = \frac{a}{2}$, więc prawie na pewno $\mu(0) = \frac{a}{2}$, więc wracając do wzoru \eqref{mu z C} mamy, że
+ 
+ \begin{align}
+    \mu = \left(\sigma^2 - \frac{a}{2}\right) e^{-t/\tau} + a -\sigma^2,
+ \end{align}
+więc ostatecznie otrzymujemy
+\begin{align}
+     P(x,t) = \frac{1}{x \sigma \sqrt{2 \pi}} \exp \left( \frac{-(\ln x -  (\sigma^2 - \frac{a}{2})e^{-t/\tau} - a + \sigma^2 )^2}{2\sigma^2}\right),
+\end{align}
+
+\subsection{b)}
+
+Widzimy, że skoro rozkład stacjonarny $x$ jest logarytmicznie normalny o parametrach $\mu_s = a - \sigma^2$ oraz $\sigma_s = \sigma$, to znamy wartość oczekiwaną oraz wariancję i wynoszą one kolejno
+\begin{align}
+    \left< x \right> &= \exp(\mu_s + \sigma_s^2 / 2) = \exp(a - \sigma^2/2) \\
+    SD(x) &= \sqrt{\left( \exp(\sigma_s^2) - 1 \right) \exp(2\mu_s + \sigma_s^2)} = \sqrt{\left( \exp(\sigma^2) - 1 \right) \exp(2a - \sigma^2)} .
+\end{align}
+
+\subsection{c)}
+
+Spróbujmy rozwiązać równanie numerycznie. Zakładając, że $(1)$ dla $x(0) = a/2$ wykorzystajmy metodę Rungego-Kutty. W naszym przypadku będziemy zmieniali parametry $a, \tau$ oraz $\sigma$.
+W tej metodzie tworzymy proces Wienera generując tablicę przyrostów danej trajektorii będącą zbiorem $n$ niezależnych losowań z rozkładu normalnego o średniej $0$ oraz wariancji równej z góry przyjętej $\Delta t$.
+
+
+Rysunki zostały stworzone w programie Octave przy użyciu kodu (dla każdego rysunku zmieniamy parametry ręcznie).
+
+\begin{figure}
+    \hspace*{-3.5cm} 
+    \includegraphics[scale=0.3]{figure1}
+    \hspace*{-3.5cm}
+    \includegraphics[scale=0.3]{figure2}
+\end{figure}
+\begin{figure}
+    \hspace*{-3.5cm}
+    \includegraphics[scale=0.3]{figure3}
+    \hspace*{-3.5cm}
+    \includegraphics[scale=0.3]{figure4}
+    
+\end{figure}
+
+
+
+\begin{listing}
+\begin{minted}[
+bgcolor=LightGray,
+breaklines,
+breaksymbolleft={},
+breakindent={15pt}
+]{octave}
+
+function [t, x, info] = rungekutta (a, tau, sigma, T, N)
+
+## compute the Runge-Kutta approximation of solution x of equation
+## dx = -(1 / tau)(xln(x) - ax)dt + x(sqrt(2) * sigma / sqrt(tau))dW_t
+## where W_t is a Wiener process, [0, T] is an interval for which we want to 
+## find a solution and N is the number of points for which we want to find 
+## Runge-Kutta approximation
+## INPUT
+## a - positive constant
+## tau - time constant
+## sigma - noise amplitude
+## T - end time
+## N - number of points used for approximation
+## OUTPUT
+## t - time vector
+## x - approximated values vector
+## info - exit code - zero for succes and nonzero for failure
+
+
+info = 0;
+t = zeros (1, N);
+x = zeros (1, N);
+ 
+if (a <= 0)
+  info = -1;
+  disp ("Warning: a is not positive");
+  return;
+endif
+
+if (tau <= 0)
+  info = -1;
+  disp ("Warning: tau is not positive");
+  return;
+endif
+
+if (sigma <= 0)
+  info = -1;
+  disp ("Warning: sigma is not positive");
+  return;
+endif
+
+if (T <= 0)
+  info = -1;
+  disp ("Warning: T is not positive");
+  return;
+endif
+
+if (N < 2)
+  info = -1;
+  disp ("Warning: N is too small (<2)");
+  return;
+endif
+
+
+\end{minted}
+\end{listing}
+
+\begin{listing}
+\begin{minted}[
+bgcolor=LightGray,
+breaklines,
+breaksymbolleft={},
+breakindent={15pt}
+]{octave}
+
+
+h = T / (N-1);
+x(1) = a / 2;
+dW = sqrt (h) * randn (1, N);
+ttau = 1 / tau;
+ssigma = (sqrt (2) * sigma) / sqrt (tau);
+y = zeros (1, N);
+for n = 2:N
+  t(n) = (n-1) * h;
+  y(n-1) = x(n-1) - ttau * (x(n-1) * log (x(n-1)) - a * x(n-1)) * h ...
+  + x(n-1) * ssigma * sqrt (h);
+  x(n) = x(n-1) - ttau * (x(n-1) * log (x(n-1)) - a * x(n-1)) * h ...
+  + x(n-1) * ssigma * dW(n-1) + 0.5 * (y(n-1) * ssigma - x(n-1) * ssigma) ...
+  * (dW(n-1) * dW(n-1) - h) / sqrt (h);	
+endfor
+endfunction
+\end{minted}
+\end{listing}
+
+\begin{listing}
+\begin{minted}[
+bgcolor=LightGray,
+breaklines,
+breaksymbolleft={},
+breakindent={15pt}
+]{octave}
+
+
+## first plot
+
+[t,x] = rungekutta (1, 1, 0.1, 15, 300);
+plot(t, x, ";a = 1, tau = 1, sigma = 0.1;");
+hold on;
+[t,x] = rungekutta (1, 1, 0.1, 15, 300);
+plot(t, x, ";a = 1, tau = 1, sigma = 0.1;");
+[t,x] = rungekutta (1, 1, 0.1, 15, 300);
+plot(t, x, ";a = 1, tau = 1, sigma = 0.1;");
+hold off;
+
+## a plots
+
+[t,x] = rungekutta (1, 1, 0.1, 15, 300);
+plot(t, x, ";a = 1, tau = 1, sigma = 0.1;");
+hold on;
+[t,x] = rungekutta (2, 1, 0.1, 15, 300);
+plot(t, x, ";a = 2, tau = 1, sigma = 0.1;");
+[t,x] = rungekutta (0.5, 1, 0.1, 15, 300);
+plot(t, x, ";a = 0.5, tau = 1, sigma = 0.1;");
+hold off;
+
+## tau plots
+[t,x] = rungekutta (1, 1, 0.1, 15, 300);
+plot(t, x, ";a = 1, tau = 1, sigma = 0.1;");
+hold on;
+[t,x] = rungekutta (1, 10, 0.1, 15, 300);
+plot(t, x, ";a = 1, tau = 10, sigma = 0.1;");
+[t,x] = rungekutta (1, 0.1, 0.1, 15, 300);
+plot(t, x, ";a = 1, tau = 0.1, sigma = 0.1;");
+hold off;
+
+## sigma plots
+[t,x] = rungekutta (1, 1, 0.1, 15, 300);
+plot(t, x, ";a = 1, tau = 1, sigma = 0.1;");
+hold on;
+[t,x] = rungekutta (1, 1, 1, 15, 300);
+plot(t, x, ";a = 1, tau = 1, sigma = 1;");
+[t,x] = rungekutta (1, 1, 0.01, 15, 300);
+plot(t, x, ";a = 1, tau = 1, sigma = 0.01;");
+hold off;
+
+
+\end{minted}
+\end{listing}
+
+
+
+\end{document}
+
+
+
